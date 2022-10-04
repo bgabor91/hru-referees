@@ -84,7 +84,7 @@ const Login = () => {
             </div>
           </form>
           <div className="flex items-center mt-3 justify-center">
-            <button className={'justify-center text-blue-500 hover:underline'}>
+            <button className='justify-center text-blue-500 hover:underline'>
               <Link to="/regisztracio">Nincs még fiókod? Készítsd el!</Link>
             </button>
           </div>
