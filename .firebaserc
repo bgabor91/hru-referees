@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "hru-referees-production",
+    "dev": "hru-referees",
+    "prod": "hru-referees-production"
+  },
+  "targets": {},
+  "etags": {}
+}

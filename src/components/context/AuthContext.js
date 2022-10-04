@@ -80,6 +80,7 @@ export const AuthContextProvider = ({ children }) => {
           createdAt,
           ...additionalInformation,
         })
+        await fetchUserData()
       } catch (error) {
         console.log('error creating the user', error.message)
       }
