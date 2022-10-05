@@ -103,7 +103,7 @@ const RefAvailabilitiyTableEdit = (props) => {
         <tbody>
           {loggedinUser && (
             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
-              <th className="py-3 text-center">
+              <th className="py-3 px-2 text-center">
                 <p className="flex justify-center">{userData.displayName}</p>
               </th>
               {dates.map((date) => (

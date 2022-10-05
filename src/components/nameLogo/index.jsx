@@ -9,10 +9,14 @@ const NameLogo = () => {
   const createInitials = () => {
     if (user) {
       const userName = userData.displayName
-      const first = userName?.slice(0, 1)
-      const searchSecond = userName?.search(' ')
-      const second = userName?.slice(searchSecond + 1, searchSecond + 2)
-      setInitials(first?.concat('', second))
+      const firstInitial = userName?.slice(0, 1)
+      const searchSecondInitial = userName?.search(' ')
+      const secondInitial = userName?.slice(searchSecondInitial + 1, searchSecondInitial + 2)
+      if (searchSecondInitial === -1) {
+        setInitials(firstInitial.toUpperCase())
+      } else {
+        setInitials(firstInitial?.toUpperCase().concat('', secondInitial.toUpperCase()))
+      }
     }
   }
 

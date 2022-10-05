@@ -8,7 +8,7 @@ const Profile = () => {
   const isAdmin = userData?.role === 'admin'
 
   return (
-    <div className="mt-10">
+    <div className="mt-10 px-4 md:px-0">
       {loading ? (
         <Spinner />
       ) : (

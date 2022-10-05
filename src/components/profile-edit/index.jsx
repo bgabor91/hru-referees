@@ -65,7 +65,7 @@ const ProfileEdit = () => {
             </p>
           )}
 
-          <div className="mt-5 md:mx-36 md:mt-0 bg-white text-gray-500">
+          <div className="mt-5 px-4 md:px-0 md:mx-36 md:mt-0 bg-white text-gray-500">
             <form onSubmit={handleSubmit}>
               <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">

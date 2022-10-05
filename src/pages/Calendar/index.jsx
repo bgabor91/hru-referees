@@ -21,7 +21,7 @@ const Calendar = () => {
   }
 
   return (
-    <div className="mt-5 md:mt-10 text-center text-gray-600">
+    <div className="mt-5 md:mt-10 text-center px-4 md:px-0 text-gray-600">
       <h1 className="text-2xl font-bold mb-2 md:mb-10">
         Játékvezető elérhetőség
       </h1>

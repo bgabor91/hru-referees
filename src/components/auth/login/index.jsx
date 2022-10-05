@@ -56,9 +56,7 @@ const Login = () => {
               value={email}
               onChange={(e) => handleChange(e)}
               placeholder="Email"
-              className={
-                'w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4'
-              }
+              className="w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
             />
             <label>Jelszó:</label>
             <input
@@ -68,15 +66,11 @@ const Login = () => {
               value={password}
               onChange={(e) => handleChange(e)}
               placeholder="Jelszó"
-              className={
-                'w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4'
-              }
+              className="w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
             />
             <div className="flex items-center mt-3 justify-center">
               <button
-                className={
-                  'bg-blue-700 hover:bg-blue-500 py-2 px-4 text-md text-white rounded border border-blue focus:outline-none focus:border-black'
-                }
+                className="bg-blue-700 hover:bg-blue-500 py-2 px-4 text-md text-white rounded border border-blue focus:outline-none focus:border-black"
                 value="Login"
               >
                 Belépés
@@ -84,7 +78,7 @@ const Login = () => {
             </div>
           </form>
           <div className="flex items-center mt-3 justify-center">
-            <button className='justify-center text-blue-500 hover:underline'>
+            <button className="justify-center text-blue-500 hover:underline">
               <Link to="/regisztracio">Nincs még fiókod? Készítsd el!</Link>
             </button>
           </div>
