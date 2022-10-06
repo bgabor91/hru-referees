@@ -1,11 +1,30 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext'
 import Spinner from '../spinner'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+const codeConstants = {
+  SUCCESS_REGISTRATION: 'Sikeres regisztráció'
+}
 
 const Profile = () => {
-  const { userData, loading } = UserAuth()
+  const { userData, loading, isSuccessRegister, setRegisterInfoToDefault } = UserAuth()
   const isAdmin = userData?.role === 'admin'
+
+  const showToastMessage = () => {
+      toast.success(codeConstants.SUCCESS_REGISTRATION, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      })
+  }
+
+  useEffect(() => {
+    if(isSuccessRegister) {
+      showToastMessage()
+    }
+    setRegisterInfoToDefault()
+  })
 
   return (
     <div className="mt-10 px-4 md:px-0">
@@ -48,6 +67,7 @@ const Profile = () => {
               Profil szerkesztése
             </Link>
           </div>
+          <ToastContainer />
         </>
       )}
     </div>

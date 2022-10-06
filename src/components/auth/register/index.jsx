@@ -1,12 +1,20 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const defaultFormFields = {
   displayName: '',
   email: '',
   password: '',
   confirmPassword: '',
+}
+
+const codeConstants = {
+  WEAK_PASSWORD: 'A jelszónak legalább 6 karakterből kell állnia',
+  EMAIL_ALREADY_IN_USE: 'Ez az email már regisztrálva van',
+  INVALID_EMAIL: 'Érvénytelen email cím'
 }
 
 const Register = () => {
@@ -34,6 +42,7 @@ const Register = () => {
       navigate('/profil')
     } catch (e) {
       console.error(e.message)
+      showToastMessage(e.code)
     }
   }
 
@@ -41,6 +50,23 @@ const Register = () => {
     const { name, value } = event.target
 
     setFormFields({ ...formFields, [name]: value })
+  }
+
+  const showToastMessage = (message) => {
+    if (message === 'auth/weak-password') {
+      console.log(message)
+      toast.error(codeConstants.WEAK_PASSWORD, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      })
+    } else if (message === 'auth/email-already-in-use') {
+      toast.error(codeConstants.EMAIL_ALREADY_IN_USE, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      })
+    } else if (message === 'auth/invalid-email') {
+      toast.error(codeConstants.EMAIL_ALREADY_IN_USE, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      })
+    }
   }
 
   return (
@@ -108,6 +134,7 @@ const Register = () => {
             </button>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </figure>
   )

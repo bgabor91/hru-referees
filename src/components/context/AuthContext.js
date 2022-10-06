@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+} from 'react'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -32,15 +38,17 @@ export const AuthContextProvider = ({ children }) => {
     role: '',
   })
   const [loading, setLoading] = useState(true)
+  const [isSuccessRegister, setIsSuccessRegister] = useState(false)
+
+  /******* Users API *******/
 
   const createUser = (email, password) => {
     if (!email || !password) return
     return createUserWithEmailAndPassword(auth, email, password)
   }
+  
 
-  /*****Users API *******/
-
-  const fetchUserData = async () => {
+  const fetchUserData = useCallback(async () => {
     try {
       const q = query(collection(db, 'users'), where('uid', '==', user.uid))
       const doc = await getDocs(q)
@@ -57,7 +65,7 @@ export const AuthContextProvider = ({ children }) => {
       console.error(err)
       //alert('An error occured while fetching user data')
     }
-  }
+  })
 
   const createUserDocumentFromAuth = async (
     userAuth,
@@ -81,8 +89,9 @@ export const AuthContextProvider = ({ children }) => {
           ...additionalInformation,
         })
         await fetchUserData()
+        setIsSuccessRegister(true)
       } catch (error) {
-        console.log('error creating the user', error.message)
+        console.error('error creating the user', error.message)
       }
     }
     return userDocRef
@@ -117,8 +126,6 @@ export const AuthContextProvider = ({ children }) => {
     let list = []
     const querySnapshot = await getDocs(collection(db, 'users'))
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      //console.log(doc.id, ' => ', doc.data())
       list.push({ id: doc.id, ...doc.data() })
     })
     return list
@@ -131,6 +138,10 @@ export const AuthContextProvider = ({ children }) => {
   const logout = () => {
     setUserData({})
     return signOut(auth)
+  }
+
+  const setRegisterInfoToDefault = () => {
+    setIsSuccessRegister(false)
   }
 
   /***** Calendars APIs */
@@ -240,7 +251,7 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     if (!user) return
     fetchUserData()
-  }, [user])
+  }, [user, fetchUserData])
 
   return (
     <UserContext.Provider
@@ -260,6 +271,8 @@ export const AuthContextProvider = ({ children }) => {
         addUserSelections,
         getCalendar,
         removeCalendar,
+        isSuccessRegister,
+        setRegisterInfoToDefault,
       }}
     >
       {children}

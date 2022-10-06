@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { UserAuth } from '../context/AuthContext'
 import RefAvailabilityTableList from './refAvailabilityTableList'
 import Spinner from '../spinner'
@@ -16,7 +15,6 @@ const RefAvailabilityTable = (props) => {
   const [calendars, setCalendars] = useState([])
   const [loading, setLoading] = useState(false)
   const [reload, setReload] = useState(false)
-  const [activeIndex, setActiveIndex] = useState()
   const [isOpen, setIsOpen] = useState(false)
 
   const isAdmin = props.isAdmin

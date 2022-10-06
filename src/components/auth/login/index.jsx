@@ -2,10 +2,16 @@ import React from 'react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const defaultFormFields = {
   email: '',
   password: '',
+}
+
+const codeConstants = {
+  USER_NOT_FOUND: 'Rossz jelszót vagy email címet adtál meg, vagy a felhasználó nem létezik',
 }
 
 const Login = () => {
@@ -29,6 +35,7 @@ const Login = () => {
     } catch (e) {
       setError(e.message)
       console.error(error)
+      showToastMessage(e.code)
     }
   }
 
@@ -36,6 +43,15 @@ const Login = () => {
     const { name, value } = event.target
 
     setFormFields({ ...formFields, [name]: value })
+  }
+
+  const showToastMessage = (message) => {
+    if (message === 'auth/user-not-found') {
+      console.log(message)
+      toast.error(codeConstants.USER_NOT_FOUND, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      })
+    }
   }
 
   return (
@@ -83,6 +99,7 @@ const Login = () => {
             </button>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </figure>
   )
