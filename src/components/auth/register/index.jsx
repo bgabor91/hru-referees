@@ -39,7 +39,7 @@ const Register = () => {
       const { user } = await createUser(email, password)
       await createUserDocumentFromAuth(user, { displayName })
       resetFormFields()
-      navigate('/profil')
+      navigate('/')
     } catch (e) {
       console.error(e.message)
       showToastMessage(e.code)
@@ -109,7 +109,7 @@ const Register = () => {
               placeholder="Jelszó"
               className="w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
             />
-            <label>Jelszó újrsa:</label>
+            <label>Jelszó újra:</label>
             <input
               name="confirmPassword"
               type="password"

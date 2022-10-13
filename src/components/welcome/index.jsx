@@ -14,30 +14,32 @@ const Welcome = () => {
   }
 
   useEffect(() => {
-    setTimeout(setShowWelcomeBanner, 800)
+    setTimeout(setShowWelcomeBanner, 500)
   }, [])
 
   return (
     <>
       {loading ? (
-        <Spinner />
+        <div className="flex md:w-full border rounded border-gray-300 mt-2 mx-4 md:mx-0 md:mt-5 md:px-5 py-1 justify-center">
+          <Spinner />
+        </div>
       ) : (
-        <div className="flex flex-col lg:flex-row lg:flex-wrap md:w-full border rounded border-gray-300 md:hover:border-gray-500/50 mt-2 mx-2 md:mx-0 md:mt-5 md:px-5 py-2 text-center lg:content-center">
+        <div className="flex flex-col lg:flex-row lg:flex-wrap md:w-full border rounded border-gray-300 md:hover:border-gray-500/50 mt-2 mx-4 md:mx-0 md:mt-5 md:px-5 py-2 text-center lg:content-center">
           {user ? (
             <>
-              <h2 className="text-md font-semibold md:mt-0 text-gray-600 leading-7">
+              <h2 className="text-sm font-semibold md:mt-0 text-gray-600 md:leading-7">
                 Üdvözöllek újra itt, {userName}!
               </h2>
-              <p className="text-md md:ml-2 md:mb-0 md:mt-0 text-gray-600 leading-7">
+              <p className="text-sm md:ml-2 md:mb-0 md:mt-0 text-gray-600 md:leading-7">
                 A szerkesztéshez, kérlek válassz a menüsorból!
               </p>
             </>
           ) : (
             <>
-              <h2 className="text-md font-bold text-gray-600 leading-7">
+              <h2 className="text-sm font-bold text-gray-600 md:leading-7">
                 Üdvözöllek az MRGSZ Játékvezetői Bizottság oldalán!
               </h2>
-              <p className="text-md font-semibold md:ml-2 text-gray-600 leading-7">
+              <p className="text-sm font-semibold md:ml-2 text-gray-600 md:leading-7">
                 Válassz a következő lehetőségek közül!
               </p>
               <div className="flex justify-around ">

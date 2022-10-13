@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { MdOutlineExpandMore, MdOutlineExpandLess } from 'react-icons/md'
-import RefAvailabilitiyTableEdit from '../refAvailabiltiyTable-edit'
+import RefAvailabilitiyTableEdit from '../refAvailabiltiyTableEdit'
 
 const RefAvailabilityTableList = (props) => {
   const {

@@ -1,13 +1,23 @@
 import React from 'react'
+
 import HeaderNavbar from '../components/navbar'
 import Layout from '../components/layout'
+import Footer from '../components/footer'
 import { AuthContextProvider } from '../components/context/AuthContext'
+import { MatchContextProvider } from '../components/context/MatchContext'
 
 const View = () => {
   return (
     <AuthContextProvider>
-      <HeaderNavbar />
-      <Layout />
+      <MatchContextProvider>
+        <div className="flex flex-col min-h-screen">
+          <HeaderNavbar />
+          <div className="flex-grow">
+            <Layout />
+          </div>
+          <Footer />
+        </div>
+      </MatchContextProvider>
     </AuthContextProvider>
   )
 }

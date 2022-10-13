@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { UserAuth } from '../context/AuthContext'
-import RefAvailabilityTableList from './refAvailabilityTableList'
+import RefAvailabilityTableList from './refAvailabilityTableListDetails'
 import Spinner from '../spinner'
 
 const RefAvailabilityTable = (props) => {

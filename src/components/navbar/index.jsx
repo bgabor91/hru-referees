@@ -75,7 +75,7 @@ const HeaderNavbar = () => {
               onClick={handleNav}
               className="border-b py-6 text-white px-3 text-center text-sm font-medium"
             >
-              <NavLink to="/merkozesek">Események</NavLink>
+              <NavLink to="/esemenyek">Események</NavLink>
             </li>
           </ul>
           <MobilLinks isLoggedIn={isLoggedIn} handleNav={handleNav} />

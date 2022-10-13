@@ -12,7 +12,7 @@ const PermanentLinks = () => {
       </NavLink>
       <NavLink
         className={`hover:bg-red-400 text-white px-3 py-2 rounded-md text-sm font-medium`}
-        to="/merkozesek"
+        to="/esemenyek"
       >
         Események
       </NavLink>

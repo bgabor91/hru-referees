@@ -7,6 +7,8 @@ import LoginPage from './pages/Auth/Login'
 import RegisterPage from './pages/Auth/Register'
 import ProtectedRoute from './components/protectedRoute'
 import Calendar from './pages/Calendar'
+import Referees from './pages/Referees'
+import Events from './pages/Events'
 
 const Router = () => {
   const routes = useRoutes([
@@ -17,6 +19,14 @@ const Router = () => {
     {
       path: '/merkozesek',
       element: <Matches />,
+    },
+    {
+      path: '/esemenyek',
+      element: <Events />,
+    },
+    {
+      path: '/jatekvezetok',
+      element: <Referees />,
     },
     {
       path: '/profil',

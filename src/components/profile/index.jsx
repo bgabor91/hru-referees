@@ -58,7 +58,7 @@ const Profile = () => {
               </div>
             )}
           </div>
-          <hr />
+          <hr className='mt-4 md:mt-0'/>
           <div className="mt-10 px-4 py-3 text-center sm:px-6">
             <Link
               className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500"
