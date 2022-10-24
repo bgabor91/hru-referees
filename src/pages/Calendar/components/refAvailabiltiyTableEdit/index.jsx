@@ -8,9 +8,13 @@ import {
 import ChkdImage from 'src/assets/images/checked.png'
 import UnChkdImage from 'src/assets/images/unchecked.png'
 
-const RefAvailabilitiyTableEdit = (props) => {
+const RefAvailabilitiyTableEdit = ({
+  calendar,
+  setSelected,
+  currentCalendar,
+  isChanged,
+}) => {
   const { user, userData } = UserAuth()
-  const { calendar, setSelected, currentCalendar, isChanged } = props
   const [isEdit, setIsEdit] = useState(false)
   const [selectedDate, setSelectedDate] = useState([])
   const [restOfUserSelection, setRestOfUserSelection] = useState([])

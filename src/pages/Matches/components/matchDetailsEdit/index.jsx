@@ -37,8 +37,7 @@ const format = 'YYYY/MM/DD'
 const mainPosition = 'bottom'
 const relativePosition = 'center'
 
-const MatchDetailsEdit = (props) => {
-  const { resetEditMode, setReload } = props
+const MatchDetailsEdit = ({resetEditMode, setReload}) => {
   const { getAllUsers } = UserAuth()
   const { createNewMatch } = MatchCollection()
   const [formFields, setFormFields] = useState(defaultFormFields)

@@ -5,19 +5,22 @@ import Layout from '../components/layout'
 import Footer from '../components/footer'
 import { AuthContextProvider } from 'src/contexts/AuthContext'
 import { MatchContextProvider } from 'src/contexts/MatchContext'
+import { CalendarContextProvider } from 'src/contexts/CalendarContext'
 
 const View = () => {
   return (
     <AuthContextProvider>
-      <MatchContextProvider>
-        <div className="flex flex-col min-h-screen">
-          <HeaderNavbar />
-          <div className="flex-grow">
-            <Layout />
+      <CalendarContextProvider>
+        <MatchContextProvider>
+          <div className="flex flex-col min-h-screen">
+            <HeaderNavbar />
+            <div className="flex-grow">
+              <Layout />
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
-      </MatchContextProvider>
+        </MatchContextProvider>
+      </CalendarContextProvider>
     </AuthContextProvider>
   )
 }

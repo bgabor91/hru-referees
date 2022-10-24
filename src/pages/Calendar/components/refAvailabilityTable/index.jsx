@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { UserAuth } from 'src/contexts/AuthContext'
+import { CalendarCollection } from 'src/contexts/CalendarContext'
 import RefAvailabilityTableListDetails from 'src/pages/Calendar/components/refAvailabilityTableListDetails'
 import Spinner from 'src/components/common/spinner'
 
-const RefAvailabilityTable = (props) => {
-  const {
-    user,
-    userData,
-    getCalendars,
-    addUserSelections,
-    getCalendar,
-    removeCalendar,
-  } = UserAuth()
+const RefAvailabilityTable = ({ isAdmin }) => {
+  const { user, userData } = UserAuth()
+  const { getCalendars, addUserSelections, getCalendar, removeCalendar } =
+    CalendarCollection()
   const [calendars, setCalendars] = useState([])
   const [loading, setLoading] = useState(false)
   const [reload, setReload] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
-
-  const isAdmin = props.isAdmin
 
   const fetchCalendarData = async () => {
     setLoading(true)

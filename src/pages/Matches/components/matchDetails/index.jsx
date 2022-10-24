@@ -6,8 +6,7 @@ import {
 } from 'react-icons/md'
 import { mainColors } from 'src/pages/Matches/data'
 
-const MatchDetails = (props) => {
-  const { matchDetails, isOpen, toggle } = props
+const MatchDetails = ({ matchDetails, isOpen, toggle }) => {
   const [bgColor, setBgColor] = useState()
   const isSingleMatch =
     matchDetails.type === 'NB I' || matchDetails.type === 'NB II'

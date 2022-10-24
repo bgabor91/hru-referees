@@ -2,20 +2,17 @@ import React, { useState, useEffect } from 'react'
 import { MdOutlineExpandMore, MdOutlineExpandLess } from 'react-icons/md'
 import RefAvailabilitiyTableEdit from '../refAvailabiltiyTableEdit'
 
-const RefAvailabilityTableListDetails = (props) => {
-  const {
-    user,
-    userData,
-    calendar,
-    isAdmin,
-    addUserSelections,
-    getCalendar,
-    removeCalendar,
-    setReload,
-    setLoading,
-    isOpen,
-    toggle,
-  } = props
+const RefAvailabilityTableListDetails = ({user,
+  userData,
+  calendar,
+  isAdmin,
+  addUserSelections,
+  getCalendar,
+  removeCalendar,
+  setReload,
+  setLoading,
+  isOpen,
+  toggle}) => {
   const [changed, setChanged] = useState(false)
   const [selected, setSelected] = useState([])
   const [currentCalendar, setCurrentCalendar] = useState()

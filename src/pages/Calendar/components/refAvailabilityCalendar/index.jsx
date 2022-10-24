@@ -3,7 +3,7 @@ import DatePicker from 'react-multi-date-picker'
 import weekends from 'react-multi-date-picker/plugins/highlight_weekends'
 import DisabledButton from 'src/components/common/disabledButton'
 import PrimaryButton from 'src/components/common/primaryButton'
-import { UserAuth } from 'src/contexts/AuthContext'
+import { CalendarCollection } from 'src/contexts/CalendarContext'
 
 const format = 'MM/DD'
 const mainPosition = 'bottom'
@@ -24,8 +24,8 @@ const months = [
   'Dec',
 ]
 
-const RefAvailabilityCalendar = (props) => {
-  const { createNewRefAvailabilityCalendar } = UserAuth()
+const RefAvailabilityCalendar = ({ resetEditMode }) => {
+  const { createNewRefAvailabilityCalendar } = CalendarCollection()
   const [dates, setDates] = useState([])
   const [eventName, setEventName] = useState('')
   const [edited, setEdited] = useState(false)
@@ -47,7 +47,7 @@ const RefAvailabilityCalendar = (props) => {
   }
 
   const exitEditMode = () => {
-    props.resetEditMode()
+    resetEditMode()
   }
 
   const mapDaysArray = () => {

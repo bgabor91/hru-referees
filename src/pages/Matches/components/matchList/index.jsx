@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import Spinner from 'src/components/common/spinner'
 import MatchDetails from '../matchDetails'
 
-const MatchList = (props) => {
-  const {allMatches } = props
+const MatchList = ({allMatches}) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleOpen = (id) => () =>

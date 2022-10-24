@@ -41,13 +41,10 @@ export const AuthContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
   const [isSuccessRegister, setIsSuccessRegister] = useState(false)
 
-  /******* Users API *******/
-
   const createUser = (email, password) => {
     if (!email || !password) return
     return createUserWithEmailAndPassword(auth, email, password)
   }
-  
 
   const fetchUserData = useCallback(async () => {
     try {
@@ -87,6 +84,7 @@ export const AuthContextProvider = ({ children }) => {
           displayName,
           email,
           createdAt,
+          role: 'user',
           ...additionalInformation,
         })
         await fetchUserData()
@@ -145,102 +143,6 @@ export const AuthContextProvider = ({ children }) => {
     setIsSuccessRegister(false)
   }
 
-  /***** Calendars APIs */
-
-  const createNewRefAvailabilityCalendar = async (eventName, matchDays) => {
-    const doc_id = eventName.toLowerCase()
-    const calendarDocRef = doc(db, 'calendars', doc_id)
-    const createdAt = new Date()
-
-    try {
-      await setDoc(calendarDocRef, {
-        eventName: eventName,
-        matchDays: matchDays,
-        createdAt: createdAt,
-      })
-    } catch (error) {
-      console.log('error creating the calendar', error.message)
-    }
-    return calendarDocRef
-  }
-
-  const addUserSelections = async (
-    userAuth,
-    eventName,
-    selected,
-    displayName
-  ) => {
-    let removeList = []
-
-    if (!userAuth) return
-
-    const calendarDocRef = doc(db, 'calendars', eventName)
-    const querySnapshot = await getDoc(calendarDocRef)
-
-    if (querySnapshot.data().userSelections) {
-      let userSelectionList = querySnapshot.data().userSelections
-
-      userSelectionList.map((doc) => {
-        if (doc.uid === userAuth.uid) {
-          removeList.push(doc)
-        }
-        return removeList
-      })
-    }
-
-    try {
-      if (removeList.length > 0) {
-        await updateDoc(calendarDocRef, {
-          userSelections: arrayRemove(removeList[0]),
-        })
-        await updateDoc(calendarDocRef, {
-          userSelections: arrayUnion({
-            uid: userAuth.uid,
-            displayName: displayName,
-            selected: selected,
-          }),
-        })
-      } else {
-        await updateDoc(calendarDocRef, {
-          userSelections: arrayUnion({
-            uid: userAuth.uid,
-            displayName: displayName,
-            selected: selected,
-          }),
-        })
-      }
-    } catch (error) {
-      console.error(error)
-    }
-    return calendarDocRef
-  }
-
-  const getCalendars = async () => {
-    let list = []
-    const querySnapshot = await getDocs(collection(db, 'calendars'))
-    querySnapshot.forEach((doc) => {
-      list.push({ id: doc.id, ...doc.data() })
-    })
-    return list
-  }
-
-  const getCalendar = async (eventName) => {
-    let calendar = {}
-    try {
-      const calendarDocRef = doc(db, 'calendars', eventName)
-      const querySnapshot = await getDoc(calendarDocRef)
-      calendar = querySnapshot.data()
-    } catch (err) {
-      console.error(err)
-      //alert('An error occured while fetching user data')
-    }
-    return calendar
-  }
-
-  const removeCalendar = async (eventName) => {
-    await deleteDoc(doc(db, 'calendars', eventName))
-  }
-
   useEffect(() => {
     const unsubscibe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser)
@@ -268,11 +170,6 @@ export const AuthContextProvider = ({ children }) => {
         createUserDocumentFromAuth,
         getAllUsers,
         addNewProfileData,
-        createNewRefAvailabilityCalendar,
-        getCalendars,
-        addUserSelections,
-        getCalendar,
-        removeCalendar,
         isSuccessRegister,
         setRegisterInfoToDefault,
       }}
