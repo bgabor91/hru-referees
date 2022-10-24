@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import RefAvailabilityCalendar from '../../components/refAvailabilityCalendar'
-import RefAvailabilityTable from '../../components/refAvailabiltyTable'
-import { UserAuth } from '../../components/context/AuthContext'
+import RefAvailabilityCalendar from './components/refAvailabilityCalendar'
+import RefAvailabilityTable from './components/refAvailabilityTable'
+import { UserAuth } from 'src/contexts/AuthContext'
+import PrimaryButton from 'src/components/common/primaryButton'
 
 const ADMIN = 'admin'
 
@@ -27,13 +28,7 @@ const Calendar = () => {
       </h1>
       {isAdmin && !editMode && (
         <div className="mt-10 px-4 py-3 text-center sm:px-6">
-          <button
-            type="button"
-            onClick={handleEditMode}
-            className="inline-flex justify-center mb-2 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500"
-          >
-            + Új létrehozása
-          </button>
+          <PrimaryButton text={'+ Új létrehozása'} onClick={handleEditMode} />
         </div>
       )}
       {editMode ? (

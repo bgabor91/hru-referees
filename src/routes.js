@@ -9,6 +9,7 @@ import ProtectedRoute from './components/protectedRoute'
 import Calendar from './pages/Calendar'
 import Referees from './pages/Referees'
 import Events from './pages/Events'
+import Videos from './pages/Videos'
 
 const Router = () => {
   const routes = useRoutes([
@@ -23,6 +24,10 @@ const Router = () => {
     {
       path: '/esemenyek',
       element: <Events />,
+    },
+    {
+      path: '/video',
+      element: <Videos />,
     },
     {
       path: '/jatekvezetok',

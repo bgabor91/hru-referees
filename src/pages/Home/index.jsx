@@ -1,8 +1,8 @@
 import React from 'react'
-import BannerImage from '../../components/bannerImage'
-import Welcome from '../../components/welcome'
-import SideMenu from '../../components/sideMenu'
-import Content from '../../components/content'
+import BannerImage from './components/bannerImage'
+import Welcome from './components/welcome'
+import SideMenu from './components/sideMenu'
+import Content from './components/content'
 
 const Home = () => {
   return (

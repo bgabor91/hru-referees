@@ -1,5 +1,5 @@
 import React from 'react'
-import ProfileEdit from '../../components/profile-edit'
+import ProfileEdit from './components/profile-edit'
 
 const ProfileEditPage = () => {
   return (

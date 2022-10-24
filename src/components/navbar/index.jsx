@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'
 
-import { UserAuth } from '../context/AuthContext'
-import SignedInLinks from '../navLinks/signedInLinks'
-import SignedOutLinks from '../navLinks/signedOutLinks'
-import PermanentLinks from '../navLinks/permanentLinks'
-import MobilLinks from '../navLinks/mobilLinks'
-import NavBarLogo from '../navbarLogo'
-import LogoText from '../navbarLogo/logoText'
+import { UserAuth } from '../../contexts/AuthContext'
+import SignedInLinks from './components/signedInLinks'
+import SignedOutLinks from './components/signedOutLinks'
+import PermanentLinks from './components/permanentLinks'
+import MobilLinks from './components/mobilLinks'
+import NavBarLogo from './components/navbarLogo'
+import LogoText from './components/logoText'
 
 const HeaderNavbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -76,6 +76,12 @@ const HeaderNavbar = () => {
               className="border-b py-6 text-white px-3 text-center text-sm font-medium"
             >
               <NavLink to="/esemenyek">Események</NavLink>
+            </li>
+            <li
+              onClick={handleNav}
+              className="border-b py-6 text-white px-3 text-center text-sm font-medium"
+            >
+              <NavLink to="/video">Videók</NavLink>
             </li>
           </ul>
           <MobilLinks isLoggedIn={isLoggedIn} handleNav={handleNav} />

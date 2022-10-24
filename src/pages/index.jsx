@@ -3,8 +3,8 @@ import React from 'react'
 import HeaderNavbar from '../components/navbar'
 import Layout from '../components/layout'
 import Footer from '../components/footer'
-import { AuthContextProvider } from '../components/context/AuthContext'
-import { MatchContextProvider } from '../components/context/MatchContext'
+import { AuthContextProvider } from 'src/contexts/AuthContext'
+import { MatchContextProvider } from 'src/contexts/MatchContext'
 
 const View = () => {
   return (
