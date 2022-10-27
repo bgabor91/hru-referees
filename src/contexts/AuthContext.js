@@ -127,6 +127,7 @@ export const AuthContextProvider = ({ children }) => {
     querySnapshot.forEach((doc) => {
       list.push({ id: doc.id, ...doc.data() })
     })
+    
     return list
   }
 
@@ -155,7 +156,8 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     if (!user) return
     fetchUserData()
-  }, [user, fetchUserData])
+    
+  }, [user])
 
   return (
     <UserContext.Provider

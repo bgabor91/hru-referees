@@ -12,7 +12,7 @@ const RefAvailabilitiyTableEdit = ({
   calendar,
   setSelected,
   currentCalendar,
-  isChanged,
+  isChanged
 }) => {
   const { user, userData } = UserAuth()
   const [isEdit, setIsEdit] = useState(false)

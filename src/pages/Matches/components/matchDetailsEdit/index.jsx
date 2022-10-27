@@ -4,7 +4,6 @@ import DatePicker from 'react-multi-date-picker'
 import weekends from 'react-multi-date-picker/plugins/highlight_weekends'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
 import {
   teams,
   types,
@@ -15,8 +14,12 @@ import {
   months,
   weekDays,
 } from 'src/pages/Matches/data'
-import { UserAuth } from 'src/contexts/AuthContext'
+//import { UserAuth } from 'src/contexts/AuthContext'
 import { MatchCollection } from 'src/contexts/MatchContext'
+import useUsers from '../../hooks/useUsers'
+import OutlinedButton from 'src/components/common/outlinedButton'
+import PrimaryButton from 'src/components/common/primaryButton'
+import DisabledButton from 'src/components/common/disabledButton'
 
 const defaultFormFields = {
   home: '',
@@ -37,17 +40,17 @@ const format = 'YYYY/MM/DD'
 const mainPosition = 'bottom'
 const relativePosition = 'center'
 
-const MatchDetailsEdit = ({resetEditMode, setReload}) => {
-  const { getAllUsers } = UserAuth()
+const MatchDetailsEdit = ({ resetEditMode, setReload }) => {
+  //const { getAllUsers } = UserAuth()
+  const { allUsers } = useUsers()
   const { createNewMatch } = MatchCollection()
   const [formFields, setFormFields] = useState(defaultFormFields)
-  const [allUsers, setAllUsers] = useState([])
+  //const [allUsers, setAllUsers] = useState([])
   const [edited, setEdited] = useState(false)
   const [selectedDate, setSelectedDate] = useState()
   const [selectedType, setSelectedType] = useState()
   const [isSingleMatch, setIsSingleMatch] = useState(true)
   const [refereesList, setRefereesList] = useState(null)
-  //const [selectedOptions, setSelectedOptions] = useState(null)
   const [refArray, setRefArray] = useState([])
   const hoursArr = hours
   const datePickerRef = useRef()
@@ -78,23 +81,23 @@ const MatchDetailsEdit = ({resetEditMode, setReload}) => {
     )
   }
 
-  const fetchUsers = async () => {
+  /* const fetchUsers = async () => {
     const response = await getAllUsers()
     setAllUsers(response)
-  }
+  } */
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    //console.log(referees[0].value)
 
     // test type
     if (type === '7s' || type === 'UP torna') {
       let refs = []
-      refereesList.map((ref) => {
-        return refs.push(ref.value)
-      })
+      if (refereesList !== null) {
+        refereesList.map((ref) => {
+          return refs.push(ref.value)
+        })
+      }
       setFormFields({ ...formFields, referees: refs })
-      console.log(formFields)
       if (date !== '' && time !== '' && venue !== '') {
         try {
           await createNewMatch(formFields)
@@ -110,7 +113,6 @@ const MatchDetailsEdit = ({resetEditMode, setReload}) => {
       }
     } else {
       if (home === away) {
-        //console.log(home + '  ' + away)
         toast.error('A hazai és a vendég csapat nem lehet ugyanaz', {
           position: toast.POSITION.BOTTOM_CENTER,
         })
@@ -148,39 +150,6 @@ const MatchDetailsEdit = ({resetEditMode, setReload}) => {
     }
 
     setReload(true)
-
-    /* if (
-      (type === '7s' || type === 'UP torna') &&
-      date !== '' &&
-      time !== '' &&
-      venue !== ''
-    ) {
-      try {
-        await createNewMatch(formFields)
-        resetFormFields()
-        resetEditMode()
-      } catch (error) {
-        console.error(error.message)
-      }
-    } else if (
-      home !== '' &&
-      away !== '' &&
-      date !== '' &&
-      time !== '' &&
-      venue !== ''
-    ) {
-      try {
-        await createNewMatch(formFields)
-        resetFormFields()
-        resetEditMode()
-      } catch (error) {
-        console.error(error.message)
-      }
-    } else {
-      toast.error('Kérlek, tölts ki minden kötelező mezőt', {
-        position: toast.POSITION.BOTTOM_CENTER,
-      })
-    } */
   }
 
   const resetFormFields = () => {
@@ -194,7 +163,6 @@ const MatchDetailsEdit = ({resetEditMode, setReload}) => {
   const handleChange = (event) => {
     const { name, value } = event.target
 
-    console.log(event.target.name)
     setFormFields({ ...formFields, [name]: value })
     setEdited(true)
   }
@@ -207,7 +175,6 @@ const MatchDetailsEdit = ({resetEditMode, setReload}) => {
   }
 
   const handleSelect = (data) => {
-    console.log(data)
     setRefereesList(data)
     let refs = []
     data.map((ref) => {
@@ -223,12 +190,11 @@ const MatchDetailsEdit = ({resetEditMode, setReload}) => {
         value: n.displayName,
       }))
     )
-    //console.log(allUsers)
   }
 
-  useEffect(() => {
+  /* useEffect(() => {
     fetchUsers()
-  }, [getAllUsers])
+  }, [getAllUsers]) */
 
   useEffect(() => {
     handleDateChange()
@@ -241,7 +207,6 @@ const MatchDetailsEdit = ({resetEditMode, setReload}) => {
     } else {
       setIsSingleMatch(true)
     }
-    console.log(selectedType)
   }, [selectedType])
 
   return (
@@ -556,26 +521,17 @@ const MatchDetailsEdit = ({resetEditMode, setReload}) => {
           </div>
           <div className="mt-5 md:mt-10 px-4 py-3 text-center sm:px-6">
             {edited ? (
-              <button
-                type="submit"
-                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500"
-              >
-                Mentem a módosításokat
-              </button>
+              <PrimaryButton type={'submit'} text={'Mentem a módosításokat'} />
             ) : (
-              <div className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-300 hover:bg-gray-400">
-                Mentem a módosításokat
-              </div>
+              <DisabledButton text={'Mentem a módosításokat'} />
             )}
           </div>
           <div className="mb-5 md:mb-10 px-4 py-3 text-center sm:px-6">
-            <button
-              type="button"
+            <OutlinedButton
               onClick={resetEditMode}
-              className="inline-flex justify-center py-2 px-4 border border-blue-500 text-blue-500 hover:border-blue-700 hover:text-blue-700 shadow-sm text-sm font-medium rounded-md"
-            >
-              Mégse
-            </button>
+              type={'button'}
+              text={'Mégse'}
+            />
           </div>
         </div>
       </form>

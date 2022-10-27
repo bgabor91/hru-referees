@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { MdOutlineExpandMore, MdOutlineExpandLess } from 'react-icons/md'
 import RefAvailabilitiyTableEdit from '../refAvailabiltiyTableEdit'
+import PrimaryButton from 'src/components/common/primaryButton'
+import OutlinedButton from 'src/components/common/outlinedButton'
+import DeleteButton from 'src/components/common/deleteButton'
 
-const RefAvailabilityTableListDetails = ({user,
+const RefAvailabilityTableListDetails = ({
+  user,
   userData,
   calendar,
   isAdmin,
@@ -12,7 +16,8 @@ const RefAvailabilityTableListDetails = ({user,
   setReload,
   setLoading,
   isOpen,
-  toggle}) => {
+  toggle,
+}) => {
   const [changed, setChanged] = useState(false)
   const [selected, setSelected] = useState([])
   const [currentCalendar, setCurrentCalendar] = useState()
@@ -22,22 +27,14 @@ const RefAvailabilityTableListDetails = ({user,
     toggle()
   }
 
-  //console.log(isOpen)
-
   const isChanged = () => {
     setChanged(!changed)
   }
-
   const saveSelectedDates = async () => {
     let currentCalendar = {}
     try {
-      await addUserSelections(
-        user,
-        calendar.eventName,
-        selected,
-        userData.displayName
-      )
-      currentCalendar = await getCalendar(calendar.eventName)
+      await addUserSelections(user, calendar.id, selected, userData.displayName)
+      currentCalendar = await getCalendar(calendar.id)
       setCurrentCalendar(currentCalendar)
       setChanged(false)
     } catch (error) {
@@ -48,7 +45,7 @@ const RefAvailabilityTableListDetails = ({user,
   const deleteCalendar = async (e) => {
     e.preventDefault()
     setLoading(true)
-    await removeCalendar(calendar.eventName)
+    await removeCalendar(calendar.id)
     setReload(true)
     setLoading(false)
   }
@@ -88,32 +85,30 @@ const RefAvailabilityTableListDetails = ({user,
       {changed && (
         <div className="flex mt-5 md:mt-2 px-4 py-3 text-center sm:px-6 justify-around">
           <div>
-            <button
-              type="button"
-              onClick={deleteChanges}
-              className="inline-flex mr-4 justify-center py-2 px-4 border border-blue-500 text-blue-500 hover:border-blue-700 hover:text-blue-700 shadow-sm text-sm font-medium rounded-md"
-            >
-              Mégse
-            </button>
-            <button
-              type="submit"
-              onClick={saveSelectedDates}
-              className="inline-flex ml-5 justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500"
-            >
-              Mentés
-            </button>
+            <span className="mr-2">
+              <OutlinedButton
+                type={'button'}
+                onClick={deleteChanges}
+                text={'Mégse'}
+              />
+            </span>
+            <span className="ml-2">
+              <PrimaryButton
+                type={'submit'}
+                text={'Mentés'}
+                onClick={saveSelectedDates}
+              />
+            </span>
           </div>
         </div>
       )}
       {isOpen && isAdmin && (
         <div className="px-4 py-3 text-center sm:px-6">
-          <button
-            type="button"
-            className="inline-flex justify-center py-2 px-4 border border-transparent  text-white bg-red-700 hover:bg-red-500 shadow-sm text-sm font-medium rounded-md"
+          <DeleteButton
+            type={'button'}
             onClick={deleteCalendar}
-          >
-            Esemény törlése
-          </button>
+            text={'Esemény törlése'}
+          />
         </div>
       )}
     </div>

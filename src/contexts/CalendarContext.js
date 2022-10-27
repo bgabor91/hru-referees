@@ -34,6 +34,7 @@ export const CalendarContextProvider = ({ children }) => {
         eventName: eventName,
         matchDays: matchDays,
         createdAt: createdAt,
+        userSelections: [],
       })
     } catch (error) {
       console.log('error creating the calendar', error.message)
@@ -43,17 +44,16 @@ export const CalendarContextProvider = ({ children }) => {
 
   const addUserSelections = async (
     userAuth,
-    eventName,
+    document_id,
     selected,
     displayName
   ) => {
     let removeList = []
-
     if (!userAuth) return
-
-    const calendarDocRef = doc(db, 'calendars', eventName)
+    
+    const calendarDocRef = doc(db, 'calendars', document_id)
     const querySnapshot = await getDoc(calendarDocRef)
-
+    
     if (querySnapshot.data().userSelections) {
       let userSelectionList = querySnapshot.data().userSelections
 
@@ -101,10 +101,10 @@ export const CalendarContextProvider = ({ children }) => {
     return list
   }
 
-  const getCalendar = async (eventName) => {
+  const getCalendar = async (doc_id) => {
     let calendar = {}
     try {
-      const calendarDocRef = doc(db, 'calendars', eventName)
+      const calendarDocRef = doc(db, 'calendars', doc_id)
       const querySnapshot = await getDoc(calendarDocRef)
       calendar = querySnapshot.data()
     } catch (err) {

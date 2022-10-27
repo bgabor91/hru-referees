@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from 'src/contexts/AuthContext'
 import Spinner from 'src/components/common/spinner'
+import OutlinedButton from 'src/components/common/outlinedButton'
+import PrimaryButton from 'src/components/common/primaryButton'
+import DisabledButton from 'src/components/common/disabledButton'
 
 const defaultFormFields = {
   displayName: '',
@@ -11,7 +14,8 @@ const defaultFormFields = {
 }
 
 const ProfileEdit = () => {
-  const { user, userData, loading, addNewProfileData, fetchUserData } = UserAuth()
+  const { user, userData, addNewProfileData, fetchUserData } =
+    UserAuth()
   const [edited, setEdited] = useState(false)
   const [formFields, setFormFields] = useState(defaultFormFields)
   const { displayName, email, club, city } = formFields
@@ -20,7 +24,7 @@ const ProfileEdit = () => {
   const resetFormFields = () => {
     setFormFields(defaultFormFields)
   }
-  
+
   useEffect(() => {
     if (!user) return
     fetchUserData()
@@ -52,7 +56,7 @@ const ProfileEdit = () => {
 
   return (
     <div className="mx-auto md:px-10 mt-10">
-      {loading ? (
+      {!displayName ? (
         <Spinner />
       ) : (
         <>
@@ -164,25 +168,17 @@ const ProfileEdit = () => {
                 </div>
                 <div className="mt-5 md:mt-10 px-4 py-3 text-center sm:px-6">
                   {edited ? (
-                    <button
-                      type="submit"
-                      className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500"
-                    >
-                      Mentem a módosításokat
-                    </button>
+                    <PrimaryButton type={'submit'} text={'Mentem a módosításokat'} />
                   ) : (
-                    <div className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-300 hover:bg-gray-400">
-                      Mentem a módosításokat
-                    </div>
+                    <DisabledButton text={'Mentem a módosításokat'}/>
                   )}
                 </div>
                 <div className="mb-5 md:mb-10 px-4 py-3 text-center sm:px-6">
-                  <Link
-                    className="inline-flex justify-center py-2 px-4 border border-blue-500 text-blue-500 hover:border-blue-700 hover:text-blue-700 shadow-sm text-sm font-medium rounded-md"
-                    to="/profil"
-                  >
-                    Vissza a profilra
-                  </Link>
+                  <OutlinedButton
+                    type={'button'}
+                    text={'Vissza a profilra'}
+                    onClick={() => navigate('/profil')}
+                  />
                 </div>
               </div>
             </form>

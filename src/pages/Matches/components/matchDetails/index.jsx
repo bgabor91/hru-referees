@@ -21,7 +21,6 @@ const MatchDetails = ({ matchDetails, isOpen, toggle }) => {
     } else if (matchDetails.type === 'UP torna') {
       setBgColor(mainColors.zinc)
     }
-    console.log('render')
   }
 
   const handleOpenMatchDetail = (e) => {

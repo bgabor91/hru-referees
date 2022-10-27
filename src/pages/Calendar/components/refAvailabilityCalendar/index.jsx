@@ -3,6 +3,7 @@ import DatePicker from 'react-multi-date-picker'
 import weekends from 'react-multi-date-picker/plugins/highlight_weekends'
 import DisabledButton from 'src/components/common/disabledButton'
 import PrimaryButton from 'src/components/common/primaryButton'
+import OutlinedButton from 'src/components/common/outlinedButton'
 import { CalendarCollection } from 'src/contexts/CalendarContext'
 
 const format = 'MM/DD'
@@ -152,12 +153,11 @@ const RefAvailabilityCalendar = ({ resetEditMode }) => {
               )}
             </div>
             <div className="mb-5 px-4 py-3 text-center sm:px-6">
-              <button
-                className="inline-flex justify-center py-2 px-4 border border-blue-500 text-blue-500 hover:border-blue-700 hover:text-blue-700 shadow-sm text-sm font-medium rounded-md"
+              <OutlinedButton
+                text={'Vissza'}
+                type={'button'}
                 onClick={exitEditMode}
-              >
-                Vissza
-              </button>
+              />
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { UserAuth } from 'src/contexts/AuthContext'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -56,7 +56,6 @@ const Register = () => {
 
   const showToastMessage = (message) => {
     if (message === 'auth/weak-password') {
-      console.log(message)
       toast.error(codeConstants.WEAK_PASSWORD, {
         position: toast.POSITION.BOTTOM_CENTER,
       })

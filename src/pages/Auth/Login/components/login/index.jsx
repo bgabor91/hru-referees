@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { UserAuth } from 'src/contexts/AuthContext'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -50,7 +50,6 @@ const Login = () => {
 
   const showToastMessage = (message) => {
     if (message === 'auth/user-not-found') {
-      console.log(message)
       toast.error(codeConstants.USER_NOT_FOUND, {
         position: toast.POSITION.BOTTOM_CENTER,
       })
