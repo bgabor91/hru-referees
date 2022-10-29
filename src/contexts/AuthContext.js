@@ -15,15 +15,11 @@ import {
   getDoc,
   doc,
   setDoc,
-  addDoc,
   updateDoc,
   getDocs,
   collection,
   query,
   where,
-  arrayUnion,
-  arrayRemove,
-  deleteDoc,
 } from 'firebase/firestore'
 import { auth, db } from 'src/firebase-config'
 
@@ -38,16 +34,53 @@ export const AuthContextProvider = ({ children }) => {
     city: '',
     role: '',
   })
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [isSuccessRegister, setIsSuccessRegister] = useState(false)
 
+  //create new user auth
   const createUser = (email, password) => {
     if (!email || !password) return
     return createUserWithEmailAndPassword(auth, email, password)
   }
 
-  const fetchUserData = useCallback(async () => {
+  // create new user doc
+  const createUserDocumentFromAuth = async (
+    userAuth,
+    additionalInformation = {}
+  ) => {
+    if (!userAuth) return
+
+    const userDocRef = doc(db, 'users', userAuth.uid)
+    const userSnapshot = await getDoc(userDocRef)
+
+    if (!userSnapshot.exists()) {
+      const { displayName, email, uid } = userAuth
+      const createdAt = new Date()
+
+      try {
+        setLoading(true)
+        await setDoc(userDocRef, {
+          uid: userAuth.uid,
+          displayName,
+          email,
+          createdAt,
+          role: 'user',
+          ...additionalInformation,
+        })
+        await fetchUserData()
+        setIsSuccessRegister(true)
+        setLoading(false)
+      } catch (error) {
+        console.error('error creating the user', error.message)
+      }
+    }
+    return userDocRef
+  }
+
+  //get current user data
+  const fetchUserData = async () => {
     try {
+      setLoading(true)
       const q = query(collection(db, 'users'), where('uid', '==', user.uid))
       const doc = await getDocs(q)
       const data = doc.docs[0].data()
@@ -63,39 +96,9 @@ export const AuthContextProvider = ({ children }) => {
       console.error(err)
       //alert('An error occured while fetching user data')
     }
-  })
-
-  const createUserDocumentFromAuth = async (
-    userAuth,
-    additionalInformation = {}
-  ) => {
-    if (!userAuth) return
-
-    const userDocRef = doc(db, 'users', userAuth.uid)
-    const userSnapshot = await getDoc(userDocRef)
-
-    if (!userSnapshot.exists()) {
-      const { displayName, email, uid } = userAuth
-      const createdAt = new Date()
-
-      try {
-        await setDoc(userDocRef, {
-          uid: userAuth.uid,
-          displayName,
-          email,
-          createdAt,
-          role: 'user',
-          ...additionalInformation,
-        })
-        await fetchUserData()
-        setIsSuccessRegister(true)
-      } catch (error) {
-        console.error('error creating the user', error.message)
-      }
-    }
-    return userDocRef
   }
 
+  //update current user data
   const addNewProfileData = async (userAuth, additionalInformation = {}) => {
     if (!userAuth) return
 
@@ -106,6 +109,7 @@ export const AuthContextProvider = ({ children }) => {
       const { displayName, club, city, uid } = userAuth
 
       try {
+        setLoading(true)
         await updateDoc(userDocRef, {
           uid: userAuth.uid,
           displayName,
@@ -113,7 +117,8 @@ export const AuthContextProvider = ({ children }) => {
           city,
           ...additionalInformation,
         })
-        fetchUserData()
+        await fetchUserData()
+        setLoading(false)
       } catch (error) {
         console.log('error adding new data to the user', error.message)
       }
@@ -121,13 +126,15 @@ export const AuthContextProvider = ({ children }) => {
     return userDocRef
   }
 
+  // get all users from users collection
   const getAllUsers = async () => {
     let list = []
+    setLoading(true)
     const querySnapshot = await getDocs(collection(db, 'users'))
     querySnapshot.forEach((doc) => {
       list.push({ id: doc.id, ...doc.data() })
     })
-    
+    setLoading(false)
     return list
   }
 
@@ -156,7 +163,6 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     if (!user) return
     fetchUserData()
-    
   }, [user])
 
   return (

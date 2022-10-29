@@ -24,21 +24,29 @@ import { db } from 'src/firebase-config'
 const CalendarContext = createContext()
 
 export const CalendarContextProvider = ({ children }) => {
+  const [loading, setLoading] = useState(false)
+
   const createNewRefAvailabilityCalendar = async (eventName, matchDays) => {
     const doc_id = eventName.toLowerCase()
     const calendarDocRef = doc(db, 'calendars', doc_id)
     const createdAt = new Date()
 
     try {
-      await setDoc(calendarDocRef, {
-        eventName: eventName,
-        matchDays: matchDays,
-        createdAt: createdAt,
-        userSelections: [],
-      })
+      setLoading(true)
+      await setDoc(
+        calendarDocRef,
+        {
+          eventName: eventName,
+          matchDays: matchDays,
+          createdAt: createdAt,
+          userSelections: [],
+        },
+        { merge: true }
+      )
     } catch (error) {
       console.log('error creating the calendar', error.message)
     }
+    setLoading(false)
     return calendarDocRef
   }
 
@@ -50,10 +58,10 @@ export const CalendarContextProvider = ({ children }) => {
   ) => {
     let removeList = []
     if (!userAuth) return
-    
+
     const calendarDocRef = doc(db, 'calendars', document_id)
     const querySnapshot = await getDoc(calendarDocRef)
-    
+
     if (querySnapshot.data().userSelections) {
       let userSelectionList = querySnapshot.data().userSelections
 
@@ -66,6 +74,7 @@ export const CalendarContextProvider = ({ children }) => {
     }
 
     try {
+      setLoading(true)
       if (removeList.length > 0) {
         await updateDoc(calendarDocRef, {
           userSelections: arrayRemove(removeList[0]),
@@ -89,20 +98,24 @@ export const CalendarContextProvider = ({ children }) => {
     } catch (error) {
       console.error(error)
     }
+    setLoading(false)
     return calendarDocRef
   }
 
   const getCalendars = async () => {
     let list = []
+    setLoading(true)
     const querySnapshot = await getDocs(collection(db, 'calendars'))
     querySnapshot.forEach((doc) => {
       list.push({ id: doc.id, ...doc.data() })
     })
+    setLoading(false)
     return list
   }
 
   const getCalendar = async (doc_id) => {
     let calendar = {}
+    setLoading(true)
     try {
       const calendarDocRef = doc(db, 'calendars', doc_id)
       const querySnapshot = await getDoc(calendarDocRef)
@@ -111,11 +124,14 @@ export const CalendarContextProvider = ({ children }) => {
       console.error(err)
       //alert('An error occured while fetching user data')
     }
+    setLoading(false)
     return calendar
   }
 
   const removeCalendar = async (eventName) => {
+    setLoading(true)
     await deleteDoc(doc(db, 'calendars', eventName))
+    setLoading(false)
   }
 
   return (
@@ -126,6 +142,7 @@ export const CalendarContextProvider = ({ children }) => {
         getCalendars,
         getCalendar,
         removeCalendar,
+        loading,
       }}
     >
       {children}

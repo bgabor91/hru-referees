@@ -14,7 +14,7 @@ import {
   months,
   weekDays,
 } from 'src/pages/Matches/data'
-//import { UserAuth } from 'src/contexts/AuthContext'
+import { UserAuth } from 'src/contexts/AuthContext'
 import { MatchCollection } from 'src/contexts/MatchContext'
 import useUsers from '../../hooks/useUsers'
 import OutlinedButton from 'src/components/common/outlinedButton'
@@ -103,6 +103,7 @@ const MatchDetailsEdit = ({ resetEditMode, setReload }) => {
           await createNewMatch(formFields)
           resetFormFields()
           resetEditMode()
+          //getAllUsers()
         } catch (error) {
           console.error(error.message)
         }

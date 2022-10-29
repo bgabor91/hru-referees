@@ -12,7 +12,7 @@ const useUsers = () => {
 
   useEffect(() => {
     fetchUsers()
-  }, [getAllUsers])
+  }, [])
 
   return { allUsers, fetchUsers }
 }

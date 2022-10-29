@@ -15,12 +15,12 @@ const defaultFormFields = {
 const codeConstants = {
   USER_NOT_FOUND:
     'Rossz jelszót vagy email címet adtál meg, vagy a felhasználó nem létezik',
+  WRONG_PASSWORD: 'Rossz jelszó',
 }
 
 const Login = () => {
   const [formFields, setFormFields] = useState(defaultFormFields)
   const { email, password } = formFields
-  const [error, setError] = useState('')
   const { signIn } = UserAuth()
   const navigate = useNavigate()
 
@@ -30,14 +30,12 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setError('')
     try {
       await signIn(email, password)
       resetFormFields()
       navigate('/')
     } catch (e) {
-      setError(e.message)
-      console.error(error)
+      console.error(e.message)
       showToastMessage(e.code)
     }
   }
@@ -51,6 +49,11 @@ const Login = () => {
   const showToastMessage = (message) => {
     if (message === 'auth/user-not-found') {
       toast.error(codeConstants.USER_NOT_FOUND, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      })
+    }
+    if (message === 'auth/wrong-password') {
+      toast.error(codeConstants.WRONG_PASSWORD, {
         position: toast.POSITION.BOTTOM_CENTER,
       })
     }

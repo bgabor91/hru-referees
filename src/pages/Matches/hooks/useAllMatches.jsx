@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { MatchCollection } from 'src/contexts/MatchContext'
 
 const useAllMatches = () => {
-  const { getAllMatches } = MatchCollection()
+  const { getAllMatches, loading } = MatchCollection()
   const [allMatches, setAllMatches] = useState([])
 
   const fetchAllMatches = async () => {
@@ -12,9 +12,9 @@ const useAllMatches = () => {
 
   useEffect(() => {
     fetchAllMatches()
-  }, [getAllMatches])
+  }, [])
 
-  return { allMatches, fetchAllMatches }
+  return { allMatches, fetchAllMatches, loading }
 }
 
 export default useAllMatches

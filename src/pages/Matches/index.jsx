@@ -4,12 +4,13 @@ import MatchList from './components/matchList'
 import MatchDetailsEdit from './components/matchDetailsEdit'
 import useAllMatches from './hooks/useAllMatches'
 import PrimaryButton from 'src/components/common/primaryButton'
+import Spinner from 'src/components/common/spinner'
 
 const ADMIN = 'admin'
 
 const Matches = () => {
   const { userData } = UserAuth()
-  const { allMatches, fetchAllMatches } = useAllMatches()
+  const { allMatches, loading, fetchAllMatches } = useAllMatches()
   const [editMode, setEditMode] = useState(false)
   const [reload, setReload] = useState(false)
   const isAdmin = userData?.role === ADMIN
@@ -26,6 +27,14 @@ const Matches = () => {
   useEffect(() => {
     fetchAllMatches()
   }, [reload])
+
+  if (loading) {
+    return (
+      <div className="mx-auto md:px-10 mt-10">
+        <Spinner />
+      </div>
+    )
+  }
 
   return (
     <div className="mt-5 md:mt-10 text-center px-4 md:px-0 text-gray-600">
